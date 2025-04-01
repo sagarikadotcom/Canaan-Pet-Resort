@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "testdb.ts", "seedDatabase.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "testdb.ts", "seedDatabase.js", "scripts/seedKennels.js", "seedKennels.js", "models/Kennels.ts"],
   "exclude": ["node_modules"]
 }

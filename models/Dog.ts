@@ -20,4 +20,4 @@ const DogSchema = new mongoose.Schema({
   friendlyWithHumans: { type: Boolean, required: true },
 }, { timestamps: true, strict: true }); // ✅ Ensures only defined fields are stored
 
-export default mongoose.models.Dog || mongoose.model("Dog", DogSchema);
+export const Dog = mongoose.models.Dog || mongoose.model("Dog", DogSchema);

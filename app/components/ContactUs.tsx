@@ -8,7 +8,6 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import EmailIcon from '@mui/icons-material/Email';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import Map from './Map'; // Import a custom Map component for Google Maps iframe
 
 const ContactUs = () => {
   return (

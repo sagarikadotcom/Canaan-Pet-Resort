@@ -8,16 +8,29 @@ import { useForm, Controller } from "react-hook-form";
 import { setOwners } from "@/redux/slices/ownerSlice";
 import { useDispatch } from "react-redux";
 
+interface OwnerFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  instagramHandle?: string;
+  address: string;
+  alternateContactName?: string;
+  alternatePhoneNumber?: string;
+  profilePicture?: string;
+  addressProof?: string;
+}
+
 export default function OwnerRegistration() {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
-  const { handleSubmit, control, watch } = useForm();
+  const { handleSubmit, control } = useForm<OwnerFormData>();
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [addressProof, setAddressProof] = useState<File | null>(null);
 const dispatch =useDispatch()
   const steps = ["Personal Details", "Contact Info", "Upload Documents", "Confirmation"];
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: OwnerFormData) => {
     if (activeStep < steps.length - 1) {
       setActiveStep(activeStep + 1);
     } else {

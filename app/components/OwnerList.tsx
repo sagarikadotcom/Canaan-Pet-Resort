@@ -1,33 +1,34 @@
-"use client";
-
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Card, CardContent, Typography, Box, Grid, Avatar } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import axios from "axios";
 import { setOwners } from "@/redux/slices/ownerSlice";
 
 export default function OwnerList() {
- const dispatch=useDispatch()
- const owners = useSelector((state: RootState) => state.owner.owners) || [];
+  const dispatch = useDispatch();
+  const owners = useSelector((state: RootState) => state.owner.owners) || [];
 
-  const getOwners =async ()=>{
+  // ✅ Fix: Wrap `getOwners` inside `useCallback` to avoid re-creation on every render
+  const getOwners = useCallback(async () => {
     try {
       const response = await axios.get(`/api/get-owners`);
-       dispatch(setOwners(response.data))
-    } catch(err){
-    console.log(err)}
+      dispatch(setOwners(response.data));
+    } catch (err) {
+      console.log(err);
+    }
+  }, [dispatch]); // ✅ Added `dispatch` as a dependency
 
-  }
-  useEffect(()=>{
-    getOwners()
-  },[])
+  // ✅ Now we safely include `getOwners` in the dependency array
+  useEffect(() => {
+    getOwners();
+  }, [getOwners]);
 
   return (
     <Box sx={{ p: 4, background: "linear-gradient(135deg, #f5f7fa, #c3cfe2)", minHeight: "100vh" }}>
       <Typography variant="h4" sx={{ textAlign: "center", fontWeight: "bold", mb: 3, color: "#333" }}>
-        🏡 Owners List
+       {`🏡 Owners List (${owners.length})`}
       </Typography>
 
       {owners?.length > 0 ? (

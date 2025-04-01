@@ -38,8 +38,11 @@
     "react-redux": "^9.2.0",
     "react-scroll-parallax": "^3.4.5",
     "react-slick": "^0.30.3",
+    "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
-    "three": "^0.174.0"
+    "three": "^0.174.0",
+    "vite-plugin-pwa": "^1.0.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

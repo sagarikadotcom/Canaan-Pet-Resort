@@ -120,7 +120,7 @@ async function seedDatabase() {
       const owner = owners[Math.floor(Math.random() * owners.length)];
       const dog = dogs[Math.floor(Math.random() * dogs.length)];
 
-      const checkInDate = faker.date.between({ from: "2023-01-01", to: "2024-12-01" });
+      const checkInDate = faker.date.between({ from: "2025-04-01", to: "2025-04-30" });
       const checkOutDate = faker.date.soon({ days: faker.number.int({ min: 1, max: 10 }), refDate: checkInDate });
 
       const booking = new Booking({

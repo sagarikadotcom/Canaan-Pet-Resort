@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
-import Owner from "@/models/Owner";
-import Dog from "@/models/Dog";
+import {Owner} from "@/models/Owner";
+import {Dog} from "@/models/Dog";
 
 export async function POST(req: NextRequest) {
   try {

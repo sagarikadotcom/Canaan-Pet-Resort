@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
-import Booking from "../../../models/Bookings";
-import Owner from "@/models/Owner";
-import Dog from "@/models/Dog";
+import { Booking } from "../../../models/Bookings";
+import { Owner } from "@/models/Owner";
+import { Dog } from "@/models/Dog";
 
 // Create Booking
 export async function POST(req: NextRequest) {
@@ -19,6 +19,8 @@ export async function POST(req: NextRequest) {
       overnightBoarding = false,
       services = [],
       totalAmount = 0,
+      status = "Pending",
+      rejectionReason = ""
     } = await req.json();
 
     if (!ownerId || !dogId || !checkInDate || !checkInTime || !checkOutDate || !checkOutTime) {
@@ -35,6 +37,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Dog not found!" }, { status: 404 });
     }
 
+    if (status === "Rejected" && !rejectionReason) {
+      return NextResponse.json({ error: "Rejection reason is required when status is Rejected" }, { status: 400 });
+    }
+
     const newBooking = new Booking({
       ownerId,
       dogId,
@@ -46,6 +52,8 @@ export async function POST(req: NextRequest) {
       overnightBoarding,
       services,
       totalAmount,
+      status,
+      rejectionReason: status === "Rejected" ? rejectionReason : null
     });
 
     await newBooking.save();
@@ -54,7 +62,7 @@ export async function POST(req: NextRequest) {
       { message: "Booking created successfully!", booking: newBooking },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error creating booking:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
@@ -64,10 +72,21 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   try {
     await connectToDatabase();
-    const { bookingId, checkInDate, checkInTime, checkOutDate, checkOutTime, status } = await req.json();
+    const { bookingId, checkInDate, checkInTime, checkOutDate, checkOutTime, status, boardingStatus, rejectionReason } = await req.json();
 
     if (!bookingId) {
       return NextResponse.json({ error: "Booking ID is required" }, { status: 400 });
+    }
+
+    const allowedStatuses = ["Confirmed", "Pending", "Completed", "Rejected", "Cancelled"];
+    const allowedBoardingStatuses = ["CheckedIn", "CheckedOut", "PaymentPending"];
+
+    if (status && !allowedStatuses.includes(status)) {
+      return NextResponse.json({ error: "Invalid status value" }, { status: 400 });
+    }
+
+    if (boardingStatus && !allowedBoardingStatuses.includes(boardingStatus)) {
+      return NextResponse.json({ error: "Invalid boarding status" }, { status: 400 });
     }
 
     const booking = await Booking.findById(bookingId);
@@ -75,12 +94,18 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Booking not found" }, { status: 404 });
     }
 
-    // Update fields if provided
+    if (status === "Rejected" && !rejectionReason) {
+      return NextResponse.json({ error: "Rejection reason is required when status is Rejected" }, { status: 400 });
+    }
+
     if (checkInDate) booking.checkInDate = checkInDate;
     if (checkInTime) booking.checkInTime = checkInTime;
     if (checkOutDate) booking.checkOutDate = checkOutDate;
     if (checkOutTime) booking.checkOutTime = checkOutTime;
-    if (status) booking.status = status; // Ensure status is updated only if provided
+    if (status) booking.status = status;
+    if (boardingStatus) booking.boardingStatus = boardingStatus;
+    if (status === "Rejected") booking.rejectionReason = rejectionReason;
+
 
     await booking.save();
 
@@ -88,7 +113,7 @@ export async function PUT(req: NextRequest) {
       { message: "Booking updated successfully!", booking },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error updating booking:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }

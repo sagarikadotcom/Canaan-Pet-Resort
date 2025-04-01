@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Typography, Container } from "@mui/material";
+import Image from "next/image";
 
 export default function ContactPage() {
   return (
@@ -26,7 +27,7 @@ export default function ContactPage() {
       {/* Floating WhatsApp Button */}
       <Box sx={{ position: "fixed", bottom: 20, right: 20 }}>
         <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
-          <img src="/images/whatsapp.png" alt="WhatsApp" width={60} />
+          <Image src="/images/whatsapp.png" alt="WhatsApp" width={60} />
         </a>
       </Box>
     </Container>

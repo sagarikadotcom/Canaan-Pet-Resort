@@ -1,0 +1,29 @@
+.container {
+    padding: 20px;
+  }
+  
+  .tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    padding: 10px 20px;
+    border: 1px solid #333;
+    background: #f9f9f9;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .active {
+    background: #333;
+    color: #fff;
+  }
+  
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  

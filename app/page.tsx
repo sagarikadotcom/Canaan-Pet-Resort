@@ -6,7 +6,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Services from './components/Services';
-import InstagramFeed from './components/InstagramFeed';
 import ContactUs from './components/ContactUs';
 import { useRouter } from 'next/navigation';
 
@@ -15,7 +14,7 @@ const navLinks = [
   { title: 'Services', path: '#services' },
   { title: 'Get in Touch', path: '#contact' },
   { title: 'Login', path: '/login' }
-
+  
 
 ];
 
@@ -133,7 +132,7 @@ const Header = () => {
         </Typography>
       </Box>
       <Box id='services'><Services /></Box>
-      <InstagramFeed />
+     
       <Box id='contact'><ContactUs /></Box>
 
       {/* Footer Section */}

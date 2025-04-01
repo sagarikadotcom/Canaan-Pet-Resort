@@ -9,6 +9,8 @@ export default function DogList() {
 
   return (
     <Box>
+      <Typography> {`DOGS (${dogs.length})`}</Typography>
+      {console.log("dogs",dogs)}
       {dogs.length > 0 ? (
         dogs.map((dog, index) => (
           <Card key={index} sx={{ mb: 2 }}>

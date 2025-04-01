@@ -12,16 +12,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { addDog } from "@/redux/slices/dogSlice";
 
+interface DogFormData {
+  name: string;
+  breed: string;
+  dob: string;
+  age: number;
+  sex: "Male" | "Female";
+  isSpayed?: string;
+  lastHeatCycle?: string;
+  foodPreference: "Veg" | "Non-Veg" | "Dry Kibbles";
+  wasBoardedBefore: string;
+  isVaccinated: string;
+  isKennelCoughVaccinated: string;
+  friendlyWithDogs: string;
+  friendlyWithHumans: string;
+  medicalCondition?: string;
+}
+
 export default function AddDog() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { handleSubmit, control, watch } = useForm();
+  const { handleSubmit, control, watch } = useForm<DogFormData>();
   const [vaccinationRecords, setVaccinationRecords] = useState<File | null>(null);
   const ownerId = useSelector((state: RootState) => state.owner).owner?.ownerId;
   const sex = watch("sex");
   const isSpayed = watch("isSpayed");
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: DogFormData) => {
     const vaccinationUrl = vaccinationRecords ? await uploadFile(vaccinationRecords) : "";
 
     const formData = { 

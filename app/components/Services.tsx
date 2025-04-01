@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Container, Typography, Button, Grid, Card, CardContent, Box } from '@mui/material';
-import { motion, useAnimate } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
 const services = [
@@ -40,13 +40,16 @@ const services = [
 
 const Services = () => {
   const router=useRouter()
-  const handleAction =(title: string)=>{
-    console.log("clicked", title)
-    if(title==="Swimming" || "Boarding" || "Grooming"){
-      router.push("/login")
+const handleAction = (title: string) => {
+  if (title === 'Swimming' || title === 'Boarding' ) {
+    router.push("/login");
+  } else if (title==="Train The Trainer"){
+    router.push("/trainer/enquiry");
 
-    }
+  }else {
+    router.push("/enquiry");
   }
+};
   return (
     <Box sx={{ position: 'relative', py: 12, px: 4 }}>
       <Container maxWidth="lg" sx={{ textAlign: 'center' }}>
@@ -110,7 +113,7 @@ const Services = () => {
                     <Typography variant="body2" mb={3}>
                       {service.description}
                     </Typography>
-                    <motion.div whileHover={{ scale: 1.1 }}>
+                   {!(service.title==="Swimming" || service.title==="Grooming")&& <motion.div whileHover={{ scale: 1.1 }}>
                       <Button
                         variant="contained"
                         sx={{
@@ -132,7 +135,7 @@ const Services = () => {
                         {service.buttonLabel}
                       </Button>
                       
-                    </motion.div>
+                    </motion.div>}
                   </CardContent>
                 </Card>
               </motion.div>

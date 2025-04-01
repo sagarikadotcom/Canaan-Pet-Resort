@@ -2,14 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
+  apiKey: "AIzaSyD7NnUj2Uh6QFfc7Wskv2DinZt1XBvE92c",
+  authDomain: "canaan-pet-resort.firebaseapp.com",
+  projectId: "canaan-pet-resort",
+  storageBucket: "canaan-pet-resort.firebasestorage.app",
+  messagingSenderId: "1014250771740",
+  appId: "1:1014250771740:web:74ca76f80e6409ba8256d9",
+  measurementId: "G-KS251HNCGM"
 };
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 

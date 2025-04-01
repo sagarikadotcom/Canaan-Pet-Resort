@@ -3,16 +3,26 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { TextField, Button, Card, CardContent, Typography, CircularProgress, Box } from "@mui/material";
+import { TextField, Button,Typography, CircularProgress, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 //import { setOwner, setOwnerID } from "@/redux/slices/ownerSlice";
 import { setDogs } from "@/redux/slices/dogSlice";
-import { setOwner, setOwners } from "@/redux/slices/ownerSlice";
+import { setOwner } from "@/redux/slices/ownerSlice";
+
+interface Owner {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+}
+
 
 export default function PhoneLookup() {
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [ownerData, setOwnerData] = useState<any>(null);
+  const [ownerData, setOwnerData] = useState<Owner | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -26,6 +36,7 @@ export default function PhoneLookup() {
       const response = await axios.get(`/api/get-owners?phoneNumber=${phoneNumber}`);
       dispatch(setOwner(response.data.owners))
       dispatch(setDogs(response.data.dogs))
+    console.log("ownerData",ownerData)
      //dispatch(setOwner(response.data))
       //dispatch(setOwnerID(response.data._id))
      // dispatch(setDogs(response.data.dogs))

@@ -29,11 +29,11 @@ export const bookingSlice = createSlice({
     },
     updateBookingStatus: (state, action: PayloadAction<{ id: string; status: string }>) => {
       const { id, status } = action.payload;
-      console.log("bookings")
       const booking = state.bookings.find((b) => b.id === id);
       if (booking) {
-        booking.status = status;
+        booking.status = status
       }
+     
   },
 }
 });
